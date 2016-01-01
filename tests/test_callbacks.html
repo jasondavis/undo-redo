@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Test undo-redo stack using callbacks</title>
+	<style>
+		body {font:16px sans-serif; color:#fff; background:#444;margin-top:16px}
+		#canvas {background:#999;cursor:crosshair}
+		.canvas {border:1px solid #000;width:1200px;height:600px;margin-top:2px}
+		button {border-radius: 3px; padding:7px; border:none;background:#7a7;color:#ffc}
+		button:disabled {background:#777; color:#999}
+	</style>
+</head>
+<body>
+
+	<div>
+		<button id="undo">UNDO</button>
+		<button id="redo">REDO</button>
+		<span id="pointer"></span>
+	</div>
+
+	<div class="canvas">
+		<canvas id="canvas" width="1200" height="600"></canvas>
+	</div>
+
+<script src="../src/undo-redo.js"></script>
+<script>
+
+	var urStack = new UndoRedo({
+		    limit: 10
+	    }),
+
+		btnUNDO = document.getElementById("undo"),
+		btnREDO = document.getElementById("redo"),
+		pointer = document.getElementById("pointer"),
+		canvas = document.getElementById("canvas"),
+		ctx = canvas.getContext("2d"),
+		w = canvas.width, h = canvas.height,
+		isDown = false;
+
+	// set callback function on undo/redo
+	urStack.onundo = urStack.onredo = update;
+
+	// set initial undo/redo button states
+	update(null);
+
+	btnUNDO.onclick = function() {urStack.undo()};  // all we need to do now is to call undo
+	btnREDO.onclick = function() {urStack.redo()};  // or redo. The callback function(s) will be invoked.
+
+	function addStackState() {
+		// store pixels from canvas as a state on the undo-redo stack
+		var idata = ctx.getImageData(0, 0, w, h);
+		urStack.add(idata);
+		update(null)
+	}
+
+	function update(data) {
+
+		if (data) {                             // if data, put it in canvas in our case
+			ctx.putImageData(data, 0, 0);
+		}
+		else if (urStack.count() === 0) {       // if no data then we are at the first state,
+			ctx.clearRect(0, 0, w, h);          // clear canvas in our case if we are at initial state
+		}
+
+		btnUNDO.disabled = !urStack.canUndo();  // if we have entries on the stack, enable undo button
+		btnREDO.disabled = !urStack.canRedo();  // if we can redo, enable redo button
+
+		pointer.innerHTML = "Pointer: " + urStack.pointer(); // show stack position
+		pointer.innerHTML += " / Count: " + urStack.count();    // show total stacks/undos
+		pointer.innerHTML += " / Limit: " + urStack.limit();    // show limit
+	}
+
+	/*
+	Drawing app related: - SEE mouseup handler for undo-redo add() usage
+	 */
+
+	ctx.lineJoin = ctx.lineCap = "round";
+	ctx.lineWidth = 3;
+
+	function getXY(e) {
+		var rect = canvas.getBoundingClientRect();
+		return {
+			x: e.clientX - rect.left,
+			y: e.clientY - rect.top
+		}
+	}
+
+	canvas.onmousedown = function(e) {
+		isDown = true;
+		var pos = getXY(e);
+		ctx.beginPath();
+		ctx.moveTo(pos.x, pos.y);
+	};
+
+	window.onmousemove = function(e) {
+		if (!isDown) return;
+		var pos = getXY(e);
+		ctx.lineTo(pos.x, pos.y);
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.moveTo(pos.x, pos.y);
+	};
+
+	window.onmouseup = function(e) {
+		if (!isDown) return;
+		isDown = false;
+		var pos = getXY(e);
+		ctx.lineTo(pos.x, pos.y);
+		ctx.stroke();
+
+		// store a undo state. We would like to store the state when
+		// line has finished (at pen up), to our undo-redo stack:
+		addStackState();
+	};
+
+
+</script>
+</body>
+</html>

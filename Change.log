@@ -1,0 +1,18 @@
+Change log for undo-redo
+------------------------
+
+1.2.1
+FIX: A numeric conversion that *could* fail in some cases
+
+1.2.0
+ADD: onundo and onredo callback vectors.
+CHG: getPointer() -> pointer()
+
+1.0.1
+FIX: (private) type check for stack object entry made more flexible
+
+1.0.0
+NEW: Initial release
+
+
+(c) Epistemex 2015-2016
