@@ -37,40 +37,46 @@ Usage
 -----
 
 Include the script in your project, then create an instance:
-
-    var stack = new UndoRedo();
+```javascript
+var stack = new UndoRedo();
+```
 
 At this point we can start adding states to the stack:
-
-    stack.add(myData);          // push data to stack, each add is one undo state
+```javascript
+stack.add(myData);          // push data to stack, each add is one undo state
+```
 
 To undo, simply call the undo() method. Data from the previous state is returned.
 If at first entry null will be returned as there won't be a previous state.
-
-    var data = stack.undo();    // return previous state data
-    if (data) /* set data */;
+```javascript
+var data = stack.undo();    // return previous state data
+if (data) /* set data */;
+```
 
 If no `add()` was called since last undo, you can call `redo()`. The data for
 new current state is returned, or null if a redo was not possible.
-
-    var data = stack.redo();    // redo and return data for next state if any
-    if (data) /* set data */;
+```javascript
+var data = stack.redo();    // redo and return data for next state if any
+if (data) /* set data */;
+```
 
 Or using callbacks:
-
-    var stack = new UndoRedo();
-    stack.onundo = function(data) { /* data or null */ };
-    stack.onredo = function(data) { /* data or null */ };
-    //...
-    stack.undo();               // invokes callback
+```javascript
+var stack = new UndoRedo();
+stack.onundo = function(data) { /* data or null */ };
+stack.onredo = function(data) { /* data or null */ };
+//...
+stack.undo();               // invokes callback
+```
 
 or by options:
-
-    var stack = new UndoRedo({
-		limit: 100,             // defaults to -1 = unlimited
-	    onUndo: undoCallback,
-	    onRedo: redoCallback
-    });
+```javascript
+var stack = new UndoRedo({
+    limit: 100,             // defaults to -1 = unlimited
+    onUndo: undoCallback,
+    onRedo: redoCallback
+});
+```
 
 See the `tests` directory for example usage.
 

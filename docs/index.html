@@ -107,20 +107,20 @@
 <li><a href="https://raw.githubusercontent.com/epistemex/undo-redo/master/undo-redo.min.js">undo-redo.min.js</a></li>
 </ul>
 <h2>Usage</h2><p>Include the script in your project, then create an instance:</p>
-<pre class="prettyprint source"><code>var stack = new UndoRedo();</code></pre><p>At this point we can start adding states to the stack:</p>
-<pre class="prettyprint source"><code>stack.add(myData);          // push data to stack, each add is one undo state</code></pre><p>To undo, simply call the undo() method. Data from the previous state is returned.
+<pre class="prettyprint source lang-javascript"><code>var stack = new UndoRedo();</code></pre><p>At this point we can start adding states to the stack:</p>
+<pre class="prettyprint source lang-javascript"><code>stack.add(myData);          // push data to stack, each add is one undo state</code></pre><p>To undo, simply call the undo() method. Data from the previous state is returned.
 If at first entry null will be returned as there won't be a previous state.</p>
-<pre class="prettyprint source"><code>var data = stack.undo();    // return previous state data
+<pre class="prettyprint source lang-javascript"><code>var data = stack.undo();    // return previous state data
 if (data) /* set data */;</code></pre><p>If no <code>add()</code> was called since last undo, you can call <code>redo()</code>. The data for
 new current state is returned, or null if a redo was not possible.</p>
-<pre class="prettyprint source"><code>var data = stack.redo();    // redo and return data for next state if any
+<pre class="prettyprint source lang-javascript"><code>var data = stack.redo();    // redo and return data for next state if any
 if (data) /* set data */;</code></pre><p>Or using callbacks:</p>
-<pre class="prettyprint source"><code>var stack = new UndoRedo();
+<pre class="prettyprint source lang-javascript"><code>var stack = new UndoRedo();
 stack.onundo = function(data) { /* data or null */ };
 stack.onredo = function(data) { /* data or null */ };
 //...
 stack.undo();               // invokes callback</code></pre><p>or by options:</p>
-<pre class="prettyprint source"><code>var stack = new UndoRedo({
+<pre class="prettyprint source lang-javascript"><code>var stack = new UndoRedo({
     limit: 100,             // defaults to -1 = unlimited
     onUndo: undoCallback,
     onRedo: redoCallback
