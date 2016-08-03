@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>UndoRedo Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.lumen.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">UndoRedo</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="UndoRedo.html">UndoRedo</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+		<div class="col-sm-3 col-md-3">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><h1>﻿undo-redo</h1><p>A undo-redo stack for JavaScript and all-purpose usage.</p>
+<h2>Features</h2><ul>
+<li>Lightweight (&lt; 1 kb), efficient and easy to use!</li>
+<li>Add any kind of data to the stack (text, images, canvas data, objects, arrays etc.).</li>
+<li>Single undo() call, returns object for new state</li>
+<li>Single redo() call, returns object for new state (if possible)</li>
+<li>Can use callback functions on undo/redo</li>
+<li>Set optional limit (with FIFO)</li>
+<li>Get undo/redo status, count and pointer</li>
+<li>Get or set stack content for storage.</li>
+<li><a href="https://epistemex.github.io/undo-redo/docs/">HTML documentation</a> included in addition to source documentation</li>
+</ul>
+<p>See the <code>demos</code> directory for example usage (or <a href="https://epistemex.github.io/undo-redo/">this online demo</a>).</p>
+<h2>Install</h2><p><strong>undo-redo</strong> can be installed in various ways:</p>
+<ul>
+<li>Bower: <code>bower install undo-redo</code></li>
+<li>Git using HTTPS: <code>git clone https://github.com/epistemex/undo-redo.git</code></li>
+<li>Git using SSH: <code>git clone git@github.com:epistemex/undo-redo.git</code></li>
+<li>Download <a href="https://github.com/epistemex/undo-redo/archive/master.zip">zip archive</a> and extract.</li>
+<li><a href="https://raw.githubusercontent.com/epistemex/undo-redo/master/src/undo-redo.js">undo-redo.js</a></li>
+<li><a href="https://raw.githubusercontent.com/epistemex/undo-redo/master/undo-redo.min.js">undo-redo.min.js</a></li>
+</ul>
+<h2>Usage</h2><p>Include the script in your project, then create an instance:</p>
+<pre class="prettyprint source"><code>var stack = new UndoRedo();</code></pre><p>At this point we can start adding states to the stack:</p>
+<pre class="prettyprint source"><code>stack.add(myData);          // push data to stack, each add is one undo state</code></pre><p>To undo, simply call the undo() method. Data from the previous state is returned.
+If at first entry null will be returned as there won't be a previous state.</p>
+<pre class="prettyprint source"><code>var data = stack.undo();    // return previous state data
+if (data) /* set data */;</code></pre><p>If no <code>add()</code> was called since last undo, you can call <code>redo()</code>. The data for
+new current state is returned, or null if a redo was not possible.</p>
+<pre class="prettyprint source"><code>var data = stack.redo();    // redo and return data for next state if any
+if (data) /* set data */;</code></pre><p>Or using callbacks:</p>
+<pre class="prettyprint source"><code>var stack = new UndoRedo();
+stack.onundo = function(data) { /* data or null */ };
+stack.onredo = function(data) { /* data or null */ };
+//...
+stack.undo();               // invokes callback</code></pre><p>or by options:</p>
+<pre class="prettyprint source"><code>var stack = new UndoRedo({
+    limit: 100,             // defaults to -1 = unlimited
+    onUndo: undoCallback,
+    onRedo: redoCallback
+});</code></pre><p>See the <code>tests</code> directory for example usage.</p>
+<h2>License</h2><p>Released under <a href="http://choosealicense.com/licenses/mit/">MIT license</a>. You may use this class in both commercial and non-commercial projects provided that full header (minified and developer versions) is included.</p>
+<p><em>&copy; 2015-2016 Epistemex</em></p>
+<p><img src="http://i.imgur.com/wZSsyt8.png" alt="Epistemex"></p></article>
+    </section>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+<div class="modal fade" id="searchResults">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search results</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<footer>
+
+	<p><b><a href='https://github.com/epistemex/'>Epistemex at GitHub</a></b></p>
+
+
+	<span class="copyright">
+	Copyright &copy; 2015-2016 Epistemex
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+	
+		on Wed Aug 3rd 2016
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		SearcherDisplay.init();
+	});
+</script>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Test undo-redo stack</title>
+	<title>undo-redo stack demo</title>
 	<style>
 		body {font:16px sans-serif; color:#fff; background:#444;margin-top:16px}
 		#canvas {background:#999;cursor:crosshair}
@@ -34,6 +34,7 @@
 		btnREDO = document.getElementById("redo"),
 		pointer = document.getElementById("pointer"),
 		canvas = document.getElementById("canvas"),
+
 		ctx = canvas.getContext("2d"),
 		w = canvas.width, h = canvas.height,
 		isDown = false;
@@ -49,6 +50,15 @@
 			ctx.putImageData(data, 0, 0);
 		}
 		else if (urStack.count() === 0) {       // if no data then we are at the first state,
+			/*
+				We could have stored an initial empty bitmap,
+				but to save some memory we simply clear the
+				canvas if no undos are available and pointer
+				is at first undo (if limited entries). count()
+				will reflect this and if no data and count>0
+				then original entries has been purged and
+				therefor not available, incl. blank canvas.
+			*/
 			ctx.clearRect(0, 0, w, h);          // clear canvas in our case if we are at initial state
 		}
 
@@ -62,9 +72,9 @@
 	};
 
 	function addStackState() {
-		// store pixels from canvas as a state on the undo-redo stack
-		var someData = ctx.getImageData(0, 0, w, h);
-		urStack.add(someData);
+		var someData =
+			    ctx.getImageData(0, 0, w, h);   // get a snapshot
+		urStack.add(someData);                  // add data to undo-redo stack
 		updateUI()
 	}
 
@@ -72,13 +82,14 @@
 		btnUNDO.disabled = !urStack.canUndo();  // if we have entries on the stack, enable undo button
 		btnREDO.disabled = !urStack.canRedo();  // if we can redo, enable redo button
 
-		pointer.innerHTML = "Pointer: " + urStack.pointer()    // show stack position
-							+ " / Count: " + urStack.count()   // show total stacks/undos
-							+ " / Limit: " + urStack.limit();  // show limit
+		pointer.innerHTML =
+			"Pointer: " + urStack.pointer()     // show stack position
+			+ " / Count: " + urStack.count()    // show total stacks/undos
+			+ " / Limit: " + urStack.limit();   // show limit
 	}
 
 	/*
-	Drawing app related: - SEE mouseup handler for undo-redo add() usage
+		Drawing app related: - SEE mouseup handler for undo-redo add() usage
 	 */
 
 	ctx.lineJoin = ctx.lineCap = "round";
