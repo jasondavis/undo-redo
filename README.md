@@ -78,7 +78,7 @@ var stack = new UndoRedo({
 });
 ```
 
-See the `tests` directory for example usage.
+See the `demos` directory for example usage.
 
 
 License
