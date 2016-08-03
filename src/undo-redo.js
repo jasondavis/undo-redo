@@ -1,17 +1,16 @@
 /*!
-undo-redo v. 1.2.1
-(c) Epistemex 2015-2016
-www.epistemex.com
-MIT License (this header required)
+	undo-redo 1.2.2
+	(c) Epistemex.com 2015-2016
+	MIT License
 */
 
 /**
  * Creates a new undo-redo stack.
  *
  * @param {object} [options] - Optional option object (JSON)
- * @param {number} [options.limit=-1] max number of entries. Stack will remove first (oldest) entry when limit is reached. Use -1 for unlimited number of entries.
- * @param {function} [options.onUndo=null] optional callback function for undo(). Can also be set directly with the onundo property.
- * @param {function} [options.onRedo=null] optional callback function for redo(). Can also be set directly with the onredo property.
+ * @param {number} [options.limit=-1] max number of entries. Stack will remove first (oldest) entry when limit is reached. Use -1 for "unlimited" number of entries.
+ * @param {function} [options.onUndo] optional callback function for [undo()]{@linkcode UndoRedo#undo}. Can also be set directly with the `onundo` property.
+ * @param {function} [options.onRedo] optional callback function for [redo()]{@linkcode UndoRedo#redo}. Can also be set directly with the `onredo` property.
  * @constructor
  */
 function UndoRedo(options) {
@@ -82,7 +81,7 @@ UndoRedo.prototype = {
 	 * can be used to replace current. If there are no undo states null
 	 * will be returned.
 	 *
-	 * You can call canUndo() in advance to check if undo is possible.
+	 * You can call [canUndo()]{@linkcode UndoRedo#canUndo} in advance to check if undo is possible.
 	 *
 	 * @returns {*|null} Previous state object, or null if none
 	 */
@@ -105,7 +104,7 @@ UndoRedo.prototype = {
 	 * current state.
 	 *
 	 * If you call add() after a undo() call, redo is not possible.
-	 * You can use canRedo() to check if redo() is possible.
+	 * You can use [canRedo()]{@linkcode UndoRedo#canRedo} to check if redo() is possible.
 	 *
 	 * @returns {*|null} current state to use, or null if redo is not possible.
 	 */
@@ -123,7 +122,7 @@ UndoRedo.prototype = {
 	},
 
 	/**
-	 * This call will return true if undo() is possible. It can be used
+	 * This call will return true if [undo()]{@linkcode UndoRedo#undo} is possible. It can be used
 	 * to set status of a undo button for example.
 	 *
 	 * @returns {boolean}
@@ -133,7 +132,7 @@ UndoRedo.prototype = {
 	},
 
 	/**
-	 * This call will return true if redo() is possible. It can be used
+	 * This call will return true if [redo()]{@linkcode UndoRedo#redo} is possible. It can be used
 	 * to set status of a redo button for example.
 	 *
 	 * @returns {boolean}
@@ -147,7 +146,7 @@ UndoRedo.prototype = {
 	 * Get current stack pointer/position in stack. Pointer is affected
 	 * by limit and will never exceed limit if limit is set. A pointer of
 	 * value 0 does not mean there hasn't been previous states, they can
-	 * simply have been purged due to the limit. Use count() to find
+	 * simply have been purged due to the limit. Use [count()]{@linkcode UndoRedo#count} to find
 	 * out if the stack would be in its initial state or not.
 	 * @returns {number}
 	 */
@@ -158,7 +157,9 @@ UndoRedo.prototype = {
 	/**
 	 * Get total count track. Use this to find out if the stack is in its
 	 * original initial state, in which case 0 will be returned. If > 0
-	 * at first undo, it indicates that entries has been purged.
+	 * at first undo (no data returned using [undo()]{@linkcode UndoRedo#undo}), indicates that the
+	 * first entries has been purged and therefor not available. This can
+	 * happen if a [limit()]{@linkcode UndoRedo#limit} (or via options) has been set.
 	 * @returns {number}
 	 */
 	count: function() {
@@ -192,7 +193,7 @@ UndoRedo.prototype = {
 	 * use localStorage and similar mechanisms).
 	 *
 	 * Note that it references the entries internally.
-	 * The container object is to be considered private.
+	 * The container object structure is to be considered private.
 	 *
 	 * @param {*} [stack] - a previously obtained stack object.
 	 * @returns {*} If no argument is given, a stack object is returned

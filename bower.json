@@ -1,18 +1,16 @@
 {
   "name": "undo-redo",
-  "version": "1.2.1",
   "homepage": "https://github.com/epistemex/undo-redo",
   "authors": [
     "epistemex <github@epistemex.com>"
   ],
   "description": "Lightweight all-purpose undo-redo stack for JavaScript.",
-  "main": "undo-redo.min.js",
+  "main": "src/undo-redo.js",
   "keywords": [
     "undo", "redo", "stack"
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
-    "tuts"
+    "**/.*"
   ]
 }
