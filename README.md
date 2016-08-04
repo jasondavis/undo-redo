@@ -29,8 +29,6 @@ Install
 - Git using HTTPS: `git clone https://github.com/epistemex/undo-redo.git`
 - Git using SSH: `git clone git@github.com:epistemex/undo-redo.git`
 - Download [zip archive](https://github.com/epistemex/undo-redo/archive/master.zip) and extract.
-- [undo-redo.js](https://raw.githubusercontent.com/epistemex/undo-redo/master/src/undo-redo.js)
-- [undo-redo.min.js](https://raw.githubusercontent.com/epistemex/undo-redo/master/undo-redo.min.js)
 
 
 Usage
