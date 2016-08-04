@@ -1,5 +1,5 @@
 /*!
-	undo-redo 1.2.2
+	undo-redo 1.2.3
 	(c) Epistemex.com 2015-2016
 	MIT License
 */
@@ -7,6 +7,10 @@
 /**
  * Creates a new undo-redo stack.
  *
+ * @property {function} [onundo] - Set a function to call back when an undo is performed. The argument given is the data for the state.
+ * If undo is not possible it will be called with null as argument, so it can be used to update button states etc.
+ * @property {function} [onredo] - Set a function to call back when an redo is performed. The argument given is the data for the state.
+ * If redo is not possible, the function will be called with null, so that it can be used to update button states etc.
  * @param {object} [options] - Optional option object (JSON)
  * @param {number} [options.limit=-1] max number of entries. Stack will remove first (oldest) entry when limit is reached. Use -1 for "unlimited" number of entries.
  * @param {function} [options.onUndo] optional callback function for [undo()]{@linkcode UndoRedo#undo}. Can also be set directly with the `onundo` property.
@@ -15,32 +19,17 @@
  */
 function UndoRedo(options) {
 
-	var me = this, n = null;			// just minimize magic
+	var me = this;						// just minimize magic
 
 	options = options || {};
 
 	me.lm = +(options.limit || -1);		// limit
 	me.st = [];							// stack array
 	me.sp = me.cn = 0;					// stack pointer / current index
-	me.fs = n;							// first out
+	me.fs = null;						// first out
 
-	/**
-	 * Set a function to call back when an undo is performed.
-	 * The argument given is the data for the state. If undo is not
-	 * possible it will be called with null as argument, so it can
-	 * be used to update button states etc.
-	 * @type {function|null}
-	 */
-	me.onundo = options.onUndo || n;
-
-	/**
-	 * Set a function to call back when an redo is performed.
-	 * The argument given is the data for the state. If redo is not
-	 * possible, the function will be called with null, so that
-	 * it can be used to update button states etc.
-	 * @type {function|null}
-	 */
-	me.onredo = options.onRedo || n;
+	me.onundo = options.onUndo;
+	me.onredo = options.onRedo;
 }
 
 UndoRedo.prototype = {
@@ -91,7 +80,7 @@ UndoRedo.prototype = {
 
 		if (me.sp) {
 			me.cn--;
-			res =  me.st[--me.sp - 1] || me.fs;
+			res = me.st[--me.sp - 1] || me.fs;
 		}
 
 		if (me.onundo) me.onundo(res);

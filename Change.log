@@ -1,6 +1,13 @@
 Change log for undo-redo
 ------------------------
 
+1.2.3
+REM: initial setting unneeded nulls for callbacks
+DOC: Fixed missing properties/callbacks doc.
+
+1.2.2
+REL: re-release. Minor changes.
+
 1.2.1
 FIX: A numeric conversion that *could* fail in some cases
 
